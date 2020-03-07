@@ -70,5 +70,27 @@ print(squares2)
 # 元组->不可变的列表
 dimension = (100, 200)
 print(dimension[0])
-#dimension[0] = 222  # 不可改变
-#print(dimension[0])
+# dimension[0] = 222  # 不可改变
+# print(dimension[0])
+
+# 字典
+alien_0 = {'color': 'green', 'points': 5, 'speed': 'slow'}
+print(alien_0['color'])
+print(alien_0['points'])
+
+alien_0['color'] = 'red'
+print(alien_0['color'])
+del alien_0['color']
+# print(alien_0['color'])
+print(alien_0)
+
+print('字典|列表')
+aliens = []
+for alien_number in range(30):
+    new_alien = alien_0
+    aliens.append(new_alien)
+for alien_number in aliens[:5]:
+    print(alien_number)
+print('...')
+print("Total number of aliens： " + str(len(aliens)))
+
