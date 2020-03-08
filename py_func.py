@@ -42,7 +42,6 @@ for name, response in responses.items():
     print(name + " would like to climb " + response + ".")
 """
 
-
 # 函数 非常灵活的使用方式 这个函数和JavaScript的函数超级类似
 """
 def greet_user(username):
@@ -67,6 +66,8 @@ def build_person(first_name, last_name, age=31):
 musician = build_person('peng', 'zhang')
 print(musician)
 """
+
+
 # 函数的参数 作为模块py_func在making_pizza中使用
 def make_pizza(size, *toppings):
     print("size: " + str(size))
