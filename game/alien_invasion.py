@@ -3,11 +3,12 @@ import pygame
 from pygame.sprite import Group
 
 import py_pkg_games.game_functions as game_funcs
-from game.alien import Alien
+from game.game_stats import GameStats
 from game.settings import Settings
 from game.ship import Ship
 
 
+# 配置类|screen|sprite(飞船|子弹|外星人)
 def run_game():
     # init
     pygame.init()
@@ -27,14 +28,21 @@ def run_game():
     aliens = Group()
     game_funcs.create_fleet(cfg, screen, aliens, ship)
 
+    # 游戏统计信息
+    # stats = GameStats(cfg)
+
     # usage
     print("started game. press keyboard to start playing.")
     while True:
         game_funcs.check_events(cfg, screen, ship, bullets)
+
+        # if stats.game_active:
         ship.update()
-        game_funcs.update_bullets(bullets)
-        game_funcs.update_aliens(cfg, aliens)
-        game_funcs.update_screen(cfg, screen, ship, bullets, aliens)
+        game_funcs.update_bullets(cfg, screen, ship, bullets, aliens)
+        # game_funcs.update_aliens(cfg, screen, ship, bullets, aliens, stats)
+        game_funcs.update_aliens(cfg, screen, ship, bullets, aliens)
+
+    game_funcs.update_screen(cfg, screen, ship, bullets, aliens)
 
 
 # main entry

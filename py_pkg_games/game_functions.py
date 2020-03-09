@@ -1,5 +1,6 @@
 # 游戏公共函数模块
 import sys
+from time import sleep
 
 import pygame
 
@@ -56,13 +57,23 @@ def update_screen(cfg, screen, ship, bullets, aliens):
 
 
 # 更新子弹的位置，并删除已消失的子弹
-def update_bullets(bullets):
+def update_bullets(cfg, screen, ship, bullets, aliens):
     bullets.update()
     # 从内存bullets中删除已消失的子弹
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
     print(len(bullets))
+    check_bullet_alien_collisions(cfg, screen, ship, bullets, aliens)
+
+
+def check_bullet_alien_collisions(cfg, screen, ship, aliens, bullets):
+    # 碰撞检测，子弹击中就删除外星人
+    collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+
+    if len(aliens) == 0:
+        bullets.empty()
+        create_fleet(cfg, screen, aliens, ship)
 
 
 # 开火
@@ -121,6 +132,38 @@ def change_fleet_direction(cfg, aliens):
 
 
 # 检测是否有外星人位于屏幕边缘，并更新整群外星人的位置
-def update_aliens(cfg, aliens):
+def update_aliens(cfg, screen, ship, bullets, aliens):
     check_fleet_edges(cfg, aliens)
     aliens.update()
+
+    # 撞机
+    if pygame.sprite.spritecollideany(ship, aliens):
+        print("Ship hit!!!")
+        # ship_hit(cfg, screen, ship, bullets, aliens, stats)
+
+    # 外星人到底屏幕底端
+    # check_alien_bottom(cfg, screen, ship, bullets, aliens, stats)
+
+
+# 统计信息
+def ship_hit(cfg, screen, ship, bullets, aliens, stats):
+    if stats.ships_left > 0:
+        stats.ships_left -= 1
+        # 清空外星人和子弹列表
+        aliens.empty()
+        bullets.empty()
+
+        create_fleet(cfg, screen, aliens, ship)
+        ship.center_ship()
+        # time.sleep 暂停
+        sleep(0.5)
+    else:
+        stats.game_active = False
+
+
+def check_alien_bottom(cfg, screen, ship, bullets, aliens, stats):
+    screen_rect = screen.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom >= screen_rect.bottom:
+            ship_hit(cfg, screen, ship, bullets, aliens, stats)
+            break
