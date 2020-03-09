@@ -105,3 +105,22 @@ def create_fleet(cfg, screen, aliens, ship):
     for row_number in range(number_rows):
         for alien_number in range(number_aliens_x):
             create_alien(cfg, screen, aliens, alien_number, row_number)
+
+
+def check_fleet_edges(cfg, aliens):
+    for alien in aliens.sprites():
+        if alien.check_edges():
+            change_fleet_direction(cfg, aliens)
+            break
+
+
+def change_fleet_direction(cfg, aliens):
+    for alien in aliens.sprites():
+        alien.rect.y += cfg.fleet_drop_speed
+    cfg.fleet_direction *= -1
+
+
+# 检测是否有外星人位于屏幕边缘，并更新整群外星人的位置
+def update_aliens(cfg, aliens):
+    check_fleet_edges(cfg, aliens)
+    aliens.update()
