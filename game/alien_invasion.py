@@ -29,16 +29,16 @@ def run_game():
     game_funcs.create_fleet(cfg, screen, aliens, ship)
 
     # 游戏统计信息
-    # stats = GameStats(cfg)
+    stats = GameStats(cfg)
 
     # usage
     print("started game. press keyboard to start playing.")
     while True:
         game_funcs.check_events(cfg, screen, ship, bullets)
-        # if stats.game_active:
-        ship.update()
-        game_funcs.update_bullets(cfg, screen, ship, bullets, aliens)
-        game_funcs.update_aliens(cfg, screen, ship, bullets, aliens)
+        if stats.game_active:
+            ship.update()
+            game_funcs.update_bullets(cfg, screen, ship, bullets, aliens)
+            game_funcs.update_aliens(cfg, screen, ship, bullets, aliens, stats)
         game_funcs.update_screen(cfg, screen, ship, bullets, aliens)
 
 

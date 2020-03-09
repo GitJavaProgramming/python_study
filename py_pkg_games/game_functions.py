@@ -67,7 +67,7 @@ def update_bullets(cfg, screen, ship, bullets, aliens):
     check_bullet_alien_collisions(cfg, screen, ship, bullets, aliens)
 
 
-def check_bullet_alien_collisions(cfg, screen, ship, aliens, bullets):
+def check_bullet_alien_collisions(cfg, screen, ship, bullets, aliens):
     # 碰撞检测，子弹击中就删除外星人
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
 
@@ -132,17 +132,17 @@ def change_fleet_direction(cfg, aliens):
 
 
 # 检测是否有外星人位于屏幕边缘，并更新整群外星人的位置
-def update_aliens(cfg, screen, ship, bullets, aliens):
+def update_aliens(cfg, screen, ship, bullets, aliens, stats):
     check_fleet_edges(cfg, aliens)
     aliens.update()
 
     # 撞机
     if pygame.sprite.spritecollideany(ship, aliens):
         print("Ship hit!!!")
-        # ship_hit(cfg, screen, ship, bullets, aliens, stats)
+        ship_hit(cfg, screen, ship, bullets, aliens, stats)
 
     # 外星人到底屏幕底端
-    # check_alien_bottom(cfg, screen, ship, bullets, aliens, stats)
+    check_alien_bottom(cfg, screen, ship, bullets, aliens, stats)
 
 
 # 统计信息
