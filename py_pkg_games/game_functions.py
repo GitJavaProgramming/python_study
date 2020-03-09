@@ -72,16 +72,26 @@ def fire(cfg, screen, ship, bullets):
         bullets.add(new_bullet)
 
 
+# 外星人数
+def get_number_aliens_x(cfg, alien_width):
+    available_space_x = cfg.screen_width - 2 * alien_width
+    number_aliens_x = int(available_space_x / (2 * alien_width))  # 创建的外星人数，外星人之间间隔
+    return number_aliens_x
+
+
+# 制造外星人
+def create_alien(cfg, screen, aliens, alien_number):
+    alien = Alien(cfg, screen)
+    alien_width = alien.rect.width  # 一个外星人的宽度
+    alien.x = alien_width + 2 * alien_width * alien_number
+    alien.rect.x = alien.x
+    aliens.add(alien)
+
+
 # 创建一群外星人
 def create_fleet(cfg, screen, aliens):
     # 创建一个外星人，并计算一行可容纳多少个外星人
     alien = Alien(cfg, screen)
-    alien_width = alien.rect.width  # 一个外星人的宽度
-    available_space_x = cfg.screen_width - 2 * alien_width
-    number_aliens_x = int(available_space_x / (2 * alien_width))  # 创建的外星人数，外星人之间间隔
-
+    number_aliens_x = get_number_aliens_x(cfg, alien.rect.width)
     for alien_number in range(number_aliens_x):
-        alien = Alien(cfg, screen)
-        alien.x = alien_width + 2 * alien_width * alien_number
-        alien.rect.x = alien.x
-        aliens.add(alien)
+        create_alien(cfg, screen, aliens, alien_number)
