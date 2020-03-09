@@ -25,7 +25,7 @@ def run_game():
     # 创建外星人
     # alien = Alien(cfg, screen)
     aliens = Group()
-    game_funcs.create_fleet(cfg, screen, aliens)
+    game_funcs.create_fleet(cfg, screen, aliens, ship)
 
     # usage
     print("started game. press keyboard to start playing.")
