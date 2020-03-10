@@ -7,8 +7,7 @@ import pygame
 from game.alien import Alien
 from game.bullet import Bullet
 
-'''
-事件处理
+''' 事件处理
 '''
 
 
@@ -66,26 +65,31 @@ def check_play_button(cfg, screen, ship, bullets, aliens, stats, play_button, mo
         ship.center_ship()
 
 
-'''
-更新子弹相关信息
+''' 更新子弹相关信息
 '''
 
 
 # 更新子弹的位置，并删除已消失的子弹
-def update_bullets(cfg, screen, ship, bullets, aliens):
+def update_bullets(cfg, screen, ship, bullets, aliens, stats, sb):
     bullets.update()
     # 从内存bullets中删除已消失的子弹
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
     print(len(bullets))
-    check_bullet_alien_collisions(cfg, screen, ship, bullets, aliens)
+    check_bullet_alien_collisions(cfg, screen, ship, bullets, aliens, stats, sb)
 
 
 # 判断子弹是否击中外星人
-def check_bullet_alien_collisions(cfg, screen, ship, bullets, aliens):
+def check_bullet_alien_collisions(cfg, screen, ship, bullets, aliens, stats, sb):
     # 碰撞检测，子弹击中就删除外星人
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+
+    if collisions:
+        for aliens in collisions.values():
+            stats.score += cfg.alien_points * len(aliens)
+            sb.prep_score()
+        check_high_score(stats, sb)
 
     if len(aliens) == 0:
         bullets.empty()
@@ -178,8 +182,7 @@ def check_alien_bottom(cfg, screen, ship, bullets, aliens, stats):
             break
 
 
-'''
-游戏的统计信息
+''' 游戏的统计信息
 '''
 
 
@@ -200,13 +203,18 @@ def ship_hit(cfg, screen, ship, bullets, aliens, stats):
         pygame.mouse.set_visible(True)
 
 
-'''
-更新屏幕信息
+def check_high_score(stats, sb):
+    if stats.score > stats.high_score:
+        stats.high_score = stats.score
+        sb.prep_high_score()
+
+
+''' 更新屏幕信息
 '''
 
 
 # 更新屏幕
-def update_screen(cfg, screen, ship, bullets, aliens, stats, play_button):
+def update_screen(cfg, screen, ship, bullets, aliens, stats, play_button, sb):
     screen.fill(cfg.bg_color)
 
     # 重绘子弹
@@ -216,7 +224,11 @@ def update_screen(cfg, screen, ship, bullets, aliens, stats, play_button):
     ship.blitme()
     aliens.draw(screen)
 
+    # 显示得分
+    sb.show_score()
+
     if not stats.game_active:
         play_button.draw_button()
 
+    # 让最近绘制的屏幕可见
     pygame.display.flip()
