@@ -1,9 +1,11 @@
 # 飞船(在屏幕上的属性，行为)
 import pygame
+from pygame.sprite import Sprite
 
 
-class Ship():
+class Ship(Sprite):
     def __init__(self, cfg, screen):
+        super(Ship, self).__init__()
         self.cfg = cfg
         self.screen = screen
 

@@ -62,6 +62,7 @@ def check_play_button(cfg, screen, ship, bullets, aliens, stats, play_button, sb
         sb.prep_score()
         sb.prep_high_score()
         sb.prep_level()
+        sb.prep_ships()
         # 清空外星人和子弹列表
         aliens.empty()
         bullets.empty()
@@ -115,8 +116,7 @@ def fire(cfg, screen, ship, bullets):
         bullets.add(new_bullet)
 
 
-'''
-外星人
+''' 外星人
 '''
 
 
@@ -171,24 +171,24 @@ def change_fleet_direction(cfg, aliens):
 
 
 # 检测是否有外星人位于屏幕边缘，并更新整群外星人的位置
-def update_aliens(cfg, screen, ship, bullets, aliens, stats):
+def update_aliens(cfg, screen, ship, bullets, aliens, stats, sb):
     check_fleet_edges(cfg, aliens)
     aliens.update()
 
     # 撞机
     if pygame.sprite.spritecollideany(ship, aliens):
         print("Ship hit!!!")
-        ship_hit(cfg, screen, ship, bullets, aliens, stats)
+        ship_hit(cfg, screen, ship, bullets, aliens, stats, sb)
 
     # 外星人到底屏幕底端
-    check_alien_bottom(cfg, screen, ship, bullets, aliens, stats)
+    check_alien_bottom(cfg, screen, ship, bullets, aliens, stats, sb)
 
 
-def check_alien_bottom(cfg, screen, ship, bullets, aliens, stats):
+def check_alien_bottom(cfg, screen, ship, bullets, aliens, stats, sb):
     screen_rect = screen.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
-            ship_hit(cfg, screen, ship, bullets, aliens, stats)
+            ship_hit(cfg, screen, ship, bullets, aliens, stats, sb)
             break
 
 
@@ -197,9 +197,11 @@ def check_alien_bottom(cfg, screen, ship, bullets, aliens, stats):
 
 
 # 统计信息
-def ship_hit(cfg, screen, ship, bullets, aliens, stats):
+def ship_hit(cfg, screen, ship, bullets, aliens, stats, sb):
     if stats.ships_left > 0:
         stats.ships_left -= 1
+        # 更新记分牌
+        sb.prep_ships()
         # 清空外星人和子弹列表
         aliens.empty()
         bullets.empty()
