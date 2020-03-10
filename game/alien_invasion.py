@@ -3,6 +3,7 @@ import pygame
 from pygame.sprite import Group
 
 import py_pkg_games.game_functions as game_funcs
+from game.button import Button
 from game.game_stats import GameStats
 from game.settings import Settings
 from game.ship import Ship
@@ -31,6 +32,9 @@ def run_game():
     # 游戏统计信息
     stats = GameStats(cfg)
 
+    # 按钮控制
+    play_button = Button(cfg, screen, "Play")
+
     # usage
     print("started game. press keyboard to start playing.")
     while True:
@@ -39,7 +43,7 @@ def run_game():
             ship.update()
             game_funcs.update_bullets(cfg, screen, ship, bullets, aliens)
             game_funcs.update_aliens(cfg, screen, ship, bullets, aliens, stats)
-        game_funcs.update_screen(cfg, screen, ship, bullets, aliens)
+        game_funcs.update_screen(cfg, screen, ship, bullets, aliens, stats, play_button)
 
 
 # main entry

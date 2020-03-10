@@ -43,7 +43,7 @@ def check_events(cfg, screen, ship, bullets):
 
 
 # 更新屏幕
-def update_screen(cfg, screen, ship, bullets, aliens):
+def update_screen(cfg, screen, ship, bullets, aliens, stats, play_button):
     screen.fill(cfg.bg_color)
 
     # 重绘子弹
@@ -52,6 +52,9 @@ def update_screen(cfg, screen, ship, bullets, aliens):
 
     ship.blitme()
     aliens.draw(screen)
+
+    if not stats.game_active:
+        play_button.draw_button()
 
     pygame.display.flip()
 
