@@ -40,7 +40,7 @@ def run_game():
     # usage
     print("started game. press keyboard to start playing.")
     while True:
-        game_funcs.check_events(cfg, screen, ship, bullets, aliens, stats, play_button)
+        game_funcs.check_events(cfg, screen, ship, bullets, aliens, stats, play_button, sb)
         if stats.game_active:
             ship.update()
             game_funcs.update_bullets(cfg, screen, ship, bullets, aliens, stats, sb)

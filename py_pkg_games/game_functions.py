@@ -30,7 +30,7 @@ def check_keyup_events(e_key, ship):
 
 
 # 事件  事件类型、事件key -- 函数在当前文件内，没有访问控制权限public private
-def check_events(cfg, screen, ship, bullets, aliens, stats, play_button):
+def check_events(cfg, screen, ship, bullets, aliens, stats, play_button, sb):
     for event in pygame.event.get():
         e_type = event.type
         if e_type == pygame.QUIT:
@@ -45,10 +45,10 @@ def check_events(cfg, screen, ship, bullets, aliens, stats, play_button):
             check_keyup_events(e_key, ship)
         elif e_type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_button(cfg, screen, ship, bullets, aliens, stats, play_button, mouse_x, mouse_y)
+            check_play_button(cfg, screen, ship, bullets, aliens, stats, play_button, sb, mouse_x, mouse_y)
 
 
-def check_play_button(cfg, screen, ship, bullets, aliens, stats, play_button, mouse_x, mouse_y):
+def check_play_button(cfg, screen, ship, bullets, aliens, stats, play_button, sb, mouse_x, mouse_y):
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
         # 重置游戏设置
@@ -58,6 +58,11 @@ def check_play_button(cfg, screen, ship, bullets, aliens, stats, play_button, mo
         # 重新统计游戏信息
         stats.reset_stats()
         stats.game_active = True
+        # 重置记分牌图像
+        sb.prep_score()
+        sb.prep_high_score()
+        sb.prep_level()
+        # 清空外星人和子弹列表
         aliens.empty()
         bullets.empty()
 
@@ -90,11 +95,16 @@ def check_bullet_alien_collisions(cfg, screen, ship, bullets, aliens, stats, sb)
             stats.score += cfg.alien_points * len(aliens)
             sb.prep_score()
         check_high_score(stats, sb)
+        # stats.reset_stats()
 
     if len(aliens) == 0:
         bullets.empty()
         # 加快游戏节奏，创建一群新的外星人
         cfg.increase_speed()
+        # 通关提高等级
+        stats.level += 1
+        sb.prep_level()
+
         create_fleet(cfg, screen, aliens, ship)
 
 
