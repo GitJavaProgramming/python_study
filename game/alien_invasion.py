@@ -5,6 +5,7 @@ from pygame.sprite import Group
 import py_pkg_games.game_functions as game_funcs
 from game.button import Button
 from game.game_stats import GameStats
+from game.over_all import OverAll
 from game.scoreboard import Scoreboard
 from game.settings import Settings
 from game.ship import Ship
@@ -36,6 +37,8 @@ def run_game():
 
     # 按钮控制
     play_button = Button(cfg, screen, "Play")
+
+    over_all = OverAll(cfg, screen, ship, bullets, aliens, stats, sb)
 
     # usage
     print("started game. press keyboard to start playing.")

@@ -22,9 +22,9 @@ try:
 
     # 文件写入
     with open(write_filename, 'a', encoding='utf-8') as file_object:
-        file_object.write('由py_file.py写入：python一个完全看不到类型的动态语言.\n')
-        file_object.write('由py_file.py写入：python模块与ES6模块，C语言的库类似，它们都是为了更好的组织软件结构.\n')
-        file_object.write('由py_file.py写入：这是领域设计思想的具体应用.\n')
+        file_object.write('由py_file.py写入：python一个完全看不到类型的动态语言.  \n')
+        file_object.write('由py_file.py写入：python模块与ES6模块，C语言的库类似，它们都是为了更好的组织软件结构.  \n')
+        file_object.write('由py_file.py写入：这是领域设计思想的具体应用.  \n')
 
 except FileNotFoundError:
     print("FileNotFoundError")
