@@ -1,9 +1,10 @@
 """python语言总结"""
 import keyword
+import math
+import random
+from abc import ABCMeta, abstractmethod
 
-# 0 语法规则
-# 1
-"""python关键字"""
+"""1 python关键字"""
 print(keyword.kwlist)
 
 # 2
@@ -127,3 +128,60 @@ print(sub_account.name)
 
 # static method
 SubAccount.static_method("12", "43", "98")
+
+"""数据结构"""
+
+
+class Stackable:
+    __metaclass__ = ABCMeta
+
+    @abstractmethod
+    def push(self, item):
+        pass
+
+    @abstractmethod
+    def pop(self):
+        pass
+
+    # @abstractmethod
+    def size(self):
+        pass
+
+
+class Stack(Stackable):
+    items = []
+
+    def __int__(self):
+        pass
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop()
+
+
+class CompleteStack(Stack):
+    # @property
+    def size(self):
+        return len(self.items)
+
+
+# usage
+s = CompleteStack()
+s.push("redis")
+s.push("zookeeper")
+print("列表长度：")
+print(s.size())
+
+"""python内置函数（更多参考python标准库 https://docs.python.org/zh-cn/3.8/library/index.html）"""
+print(abs(-1))
+print(bin(-1))
+print(math.cos(10))
+print(math.ceil(10.3))
+print(math.floor(10.3))
+print(math.trunc(10.3))
+print(random.randint(1, 100))
+print('...')
+
+"""python虚拟机与内存管理"""
