@@ -149,10 +149,8 @@ class Stackable:
 
 
 class Stack(Stackable):
-    items = []
-
-    def __int__(self):
-        pass
+    def __init__(self):
+        self.items = []
 
     def push(self, item):
         self.items.append(item)

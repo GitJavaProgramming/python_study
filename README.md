@@ -20,3 +20,4 @@ python从入门到实践
     python参考手册（第四版）
     python官方文档（使用当前最新稳定版3.8）  https://docs.python.org/zh-cn/3.8/index.html
     python源码剖析
+    数据结构与算法：python语言描述
