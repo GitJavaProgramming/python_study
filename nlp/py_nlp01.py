@@ -2,7 +2,7 @@
 import string
 
 import nltk
-from nltk import word_tokenize, re
+from nltk import word_tokenize, re, edit_distance, jaccard_distance
 from nltk.corpus import stopwords
 from nltk.tokenize.util import spans_to_relative
 
@@ -59,3 +59,21 @@ print("英语单词-停顿词：", stops)
 words = ["Don't", 'hesitate', 'to', 'ask', 'questions']
 out = [word for word in words if word not in stops]
 print(out)
+
+"""相似性度量（比较）算法 参考源码 distance.py"""
+out = edit_distance('relate', 'relation')  # 动态规划方法（y=x映射）
+print(out)
+X = set([10, 20, 30, 40])
+Y = set([20, 30, 60])
+print(jaccard_distance(X, Y))  # 集合相交法  交集长/并集长
+"""
+史密斯-沃特曼算法 nlp/Smith-Waterman-Algorithm-Example.gif
+基于生物信息学的知识来匹配蛋白序列或者DNA序列的算法  找出两个序列中具有高相似度的片段
+参考wiki https://zh.wikipedia.org/wiki/%E5%8F%B2%E5%AF%86%E6%96%AF-%E6%B2%83%E7%89%B9%E6%9B%BC%E7%AE%97%E6%B3%95
+该算法主要分两步，计算得分矩阵和寻找最优比对序列
+    得分矩阵的作用是对两序列中两两位置进行打分以逐步记录最优比对。矩阵的长度和宽度分别为两序列长度+1。额外的首行和首列是为了让序列的末端可以和空位匹配。首行和首列均设为0。
+    位罚分决定了插入或者删除的分值。最基本的空位罚分方式为每次插入或者删除的得分相同。
+    打分
+    回溯
+初始化得分矩阵->定置换矩阵及空位罚分方法->打分->回溯
+"""
