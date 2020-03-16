@@ -1,5 +1,5 @@
 """统计语言建模"""
-"""计算句子中某种语言模式出现概率的统计模型 把形式语言L(G)作为模型进行统计分析？？"""
+"""计算句子中某种语言模式出现概率的统计模型 把自然语言作为模型进行统计分析"""
 import nltk
 from nltk import ngrams, BigramCollocationFinder, BigramAssocMeasures, unique_list, KneserNeyProbDist
 from nltk.corpus import alpino, webtext, stopwords
