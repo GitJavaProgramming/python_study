@@ -1,6 +1,5 @@
 """单词的形态"""
 from nltk import PorterStemmer, LancasterStemmer, RegexpStemmer, SnowballStemmer, WordNetLemmatizer
-from polyglot.downloader import downloader
 
 """（英语？）词干提取器 nltk.stem"""
 stemmer = PorterStemmer()
