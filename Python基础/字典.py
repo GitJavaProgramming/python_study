@@ -1,0 +1,12 @@
+d = dict(name='peng', age=33, job='coder')
+print(d)
+print(len(d))
+print(d["name"])
+print(d.get('aa'))
+# clear copy fromkeys get items keys pop popitem setdefault update values
+print(d.items())
+print(d.keys())
+# d.pop('name')
+print(d.popitem())
+d.setdefault("sex", "man")
+print(d.values())
