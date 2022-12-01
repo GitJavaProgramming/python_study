@@ -7,7 +7,7 @@ print(your_dog.name)
 print(your_dog.roll_over())
 # 直接修改属性
 your_dog.name = "big dog"
-print(your_dog.name)
+print(your_dog.sit())
 # new_dog = cls.Dog("dog", 2)
 # print(new_dog.name)
 # 方法修改
@@ -17,7 +17,7 @@ print(your_dog.name)
 # print(new_dog.name)
 
 # 对象继承
-your_wolf = cls.Wolf("狼", "狼狗", 3);
+your_wolf = cls.Wolf("狼", "狼狗", 3)
 your_wolf.sit()
 your_wolf.dog.sit()
 your_wolf.tansform()
