@@ -12,6 +12,7 @@ f.close()
 # readlines writelines
 f = open('file.txt', 'r')
 lines = f.readlines()
+print(type(lines))
 f.close()
 lines[1] = 'world'
 print(lines)
